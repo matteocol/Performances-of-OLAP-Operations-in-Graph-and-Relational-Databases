@@ -1,0 +1,109 @@
+Source Codes Of the Implemented Queries
+
+Query 1: SQL
+SELECT o.User_Id, sum(q.Score) as Score
+from OWNER1 as o join QUESTION_OWNER as qo on
+o.User_Id=qo.User_Id
+join QUESTION as q on qo.Question_Id=q.Question_Id
+group by o.User_ID
+
+Query 1: CYPHER
+MATCH (o:OWNER) <- [r:REALIZED]-(q:QUESTION)
+return o.user_id, sum(q.score) as Score
+
+Query 2: SQL
+SELECT o.User_Id, sum(q.Score) as Score
+from OWNER1 as o join QUESTION_OWNER as qo on
+o.User_Id=qo.User_Id
+join QUESTION as q on qo.Question_Id=q.Question_Id
+where q.Creation_Date between ’2010-01-01’ and ’2010-01-31’
+group by o.User_ID
+
+Query 2: CYPHER
+MATCH (o:OWNER) <- [r:REALIZED]-(q:QUESTION)
+where (q.creation_date>=’2010-01-01’ and q.creation_date<=’2010-01-31’)
+return o.user_id, sum(q.score) as Score
+
+Query 3: SQL
+SELECT o.User_Id, sum(q.Score) as Score
+from OWNER1 as o join QUESTION_OWNER as qo on
+o.User_Id=qo.User_Id
+join QUESTION as q on qo.Question_Id=q.Question_Id
+where q.Creation_Date between ’2012-01-01’ and ’2016-03-31’
+group by o.User_ID
+
+Query 3: CYPHER
+MATCH (o:OWNER) <- [r:REALIZED]-(q:QUESTION)
+where (q.creation_date>=’2012-01-01’ and q.creation_date<=’2016-03-31’)
+return o.user_id, sum(q.score) as Score
+
+Query 4: SQL
+Select count(o.User_id) as Numero_OWNER, q.Creation_Date
+from OWNER1 as o join QUESTION_OWNER as qo on
+o.User_Id=qo.User_Id
+join QUESTION as q on qo.Question_Id=q.Question_Id
+where o.Reputation between ’10’ and ’20’ and q.Creation_Date between
+’2010-01-01’ and ’2010-01-31’
+group by (q.Creation_Date);
+
+Query 4: CYPHER
+MATCH (o:OWNER) <- [r:REALIZED]-(q:QUESTION)
+where (q.creation_date>=’2010-01-01’ and q.creation_date<=’2010-01-31’)
+and (o.reputation>=’10’ and o.reputation<=’20’)
+return count(o) as Numero_Owner, q.creation_date
+
+Query 5: SQL
+Select count(o.User_id) as Numero_OWNER, q.Creation_Date
+from OWNER1 as o join QUESTION_OWNER as qo on
+o.User_Id=qo.User_Id
+join QUESTION as q on qo.Question_Id=q.Question_Id
+where o.Reputation between ’10’ and ’20’ and q.Creation_Date between
+’2012-01-01’ and ’2016-03-31’
+group by (q.Creation_Date);
+
+Query 5: CYPHER
+MATCH (o:OWNER) <- [r:REALIZED]-(q:QUESTION)
+where (q.creation_date>=’2012-01-01’ and q.creation_date<=’2016-03-31’)
+and (o.reputation>=’10’ and o.reputation<=’20’)
+return count(o) as Numero_Owner, q.creation_date
+
+Query 6: SQL
+SELECT o.User_Id, avg(q.View_Count) as
+Visualization_Number
+from OWNER1 as o join QUESTION_OWNER as
+qo on o.User_Id=qo.User_Id
+join QUESTION as q on
+qo.Question_Id=q.Question_Id
+group by o.User_ID
+
+Query 6: CYPHER
+MATCH (o:OWNER) <- [r:REALIZED]-
+(q:QUESTION)
+return o.user_id, avg(q.view_count) as
+Visualization_Number
+
+Query 7: SQL
+SELECT o.User_Id, avg(q.View_Count) as Visualization_Number
+from OWNER1 as o join QUESTION_OWNER as qo on o.User_Id=qo.User_Id
+join QUESTION as q on qo.Question_Id=q.Question_Id
+where q.Creation_Date between ’2018-01-01’ and ’2018-03-31’
+group by o.User_ID
+
+Query 7: CYPHER
+MATCH (o:OWNER) <- [r:REALIZED]-(q:QUESTION)
+where (q.creation_date>=’2018-01-01’ and q.creation_date<=2018-03-31’)
+return o.user_id, avg(q.View_Count) as Visualization_Number
+
+Query 8: SQL
+Select count(o.User_id) as Numero_OWNER, q.Creation_Date
+from OWNER1 as o join QUESTION_OWNER as qo on o.User_Id=qo.User_Id
+join QUESTION as q on qo.Question_Id=q.Question_Id
+where o.Accept_Rate between ’0’ and ’50’ and q.Creation_Date between ’2018-01-01’ and
+’2018-03-31’
+group by (q.Creation_Date);
+
+Query 8: CYPHER
+MATCH (o:OWNER) <- [r:REALIZED]-(q:QUESTION)
+where (q.creation_date>=’2018-01-01’ and q.creation_date<=’2018-03-31’)
+and (o.accept_rate>=0’ and o.accept_rate<=50’)
+return count(o) as Numero_Owner, q.creation_date
